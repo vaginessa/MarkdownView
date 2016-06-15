@@ -97,7 +97,7 @@ public class MarkdownActivity extends AppCompatActivity {
 
     boolean allowGestures = bundle.getBoolean(EXTRA_ALLOW_GESTURES);
     if(!allowGestures){
-      //todo
+      markdownView.allowGestures(false);
     }
 
     boolean openLinksExternally = bundle.getBoolean(EXTRA_OPEN_LINKS_EXTERNALLY);

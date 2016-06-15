@@ -19,6 +19,7 @@ import java.io.File;
 public class MarkdownView extends RelativeLayout {
   private static final String TAG = MarkdownView.class.getSimpleName();
   private WebView webView;
+  private WebSettings webSettings;
   private ProgressBar progress;
 
   private File file = null;
@@ -64,7 +65,7 @@ public class MarkdownView extends RelativeLayout {
     webView.loadUrl("about:blank");//clear all
     progress = (ProgressBar) findViewById(R.id.markdown_progress_bar);
 
-    WebSettings webSettings = webView.getSettings();
+    webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
 
     //add pinch/zoom
@@ -142,15 +143,27 @@ public class MarkdownView extends RelativeLayout {
     }
   }
 
+  //todo - double escape markdown syntax, eg: \\#
+  //todo - double escape line ends, eg: \\n
   public void showMarkdown(String markdown){
     l("showMarkdown(): " + markdown);
-    //webView.loadUrl("javascript:loadString('" + markdown + "');");
     webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, markdown), "text/html", "utf-8", null);
-
   }
 
   public void showMarkdown(File markdownFile){
     //todo
+  }
+
+  //On by default
+  public void allowGestures(boolean allowGestures){
+    if(allowGestures){
+      webSettings.setBuiltInZoomControls(true);
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        webSettings.setDisplayZoomControls(false);
+      }
+    }else{
+      webSettings.setBuiltInZoomControls(false);
+    }
   }
 
   private void l(String message){
