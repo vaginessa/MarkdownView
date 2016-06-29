@@ -1,5 +1,5 @@
 # MarkdownView - work in progress/coming soon.
-Markdown view for Android
+Markdown view for Android - Work in progress, not fit for use.
 
 ## Usage: Activity
 ```java
