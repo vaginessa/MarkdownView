@@ -1,4 +1,6 @@
 # MarkdownView
+[![Release](https://jitpack.io/v/fiskurgit/MarkdownView.svg)](https://jitpack.io/#fiskurgit/MarkdownView) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fiskurgit/ChipCloud/blob/master/LICENSE)
+
 Markdown view for Android. Display [Markdown](https://en.wikipedia.org/wiki/Markdown) in your apps, useful for FAQs, Help, Size Guides, About screens etc. To make things really easy there's an Activity included, just use the included IntentBuilder.
 
 ## Usage
