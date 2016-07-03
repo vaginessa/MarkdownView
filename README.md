@@ -23,3 +23,36 @@ startActivity(intent);
     android:layout_height="match_parent"
     />
 ```
+
+##Dependency
+
+Add jitpack.io to your root build.gradle, eg:
+
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+then add the dependency to your project build.gradle:
+
+```groovy
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.github.fiskurgit:MarkdownView:1.0.0'
+}
+```
+You can find the latest version in the releases tab above: https://github.com/fiskurgit/MarkdownView/releases
+
+More options at jitpack.io: https://jitpack.io/#fiskurgit/MarkdownView
+
+##Licence
+
+Full licence here: https://github.com/fiskurgit/MarkdownView/blob/master/LICENSE
+
+In short:
+
+> The MIT License is a permissive license that is short and to the point. It lets people do anything they want with your code as long as they provide attribution back to you and don’t hold you liable.
