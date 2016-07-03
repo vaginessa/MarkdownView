@@ -1,5 +1,5 @@
-# MarkdownView - work in progress/coming soon.
-Markdown view for Android - Work in progress, not fit for use.
+# MarkdownView
+Markdown view for Android. Display [Markdown](https://en.wikipedia.org/wiki/Markdown) in your apps, useful for FAQs, Help, Size Guides, About screens etc. To make things really easy there's an Activity included, just use the included IntentBuilder.
 
 ## Usage
 
