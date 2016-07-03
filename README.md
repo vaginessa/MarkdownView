@@ -3,6 +3,8 @@
 
 Markdown view for Android. Display [Markdown](https://en.wikipedia.org/wiki/Markdown) in your apps, useful for FAQs, Help, Size Guides, About screens etc. To make things really easy there's an Activity included, just use the included IntentBuilder.
 
+This library is essentially just a wrapper around [Marked.js](https://github.com/chjj/marked) and uses [Github Markdown CSS](https://github.com/sindresorhus/github-markdown-css) to style the generated Markdown.
+
 ## Usage
 
 ### Activity
