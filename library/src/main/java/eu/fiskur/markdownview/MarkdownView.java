@@ -143,10 +143,10 @@ public class MarkdownView extends RelativeLayout {
     }
   }
 
-  //todo - double escape markdown syntax, eg: \\#
-  //todo - double escape line ends, eg: \\n
   public void showMarkdown(String markdown){
     l("showMarkdown(): " + markdown);
+    markdown = markdown.replace("\n", "\\n");
+    l("Processing markdown: " + markdown);
     webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, markdown), "text/html", "utf-8", null);
   }
 

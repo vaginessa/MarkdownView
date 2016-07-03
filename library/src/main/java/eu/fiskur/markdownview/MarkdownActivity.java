@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 public class MarkdownActivity extends AppCompatActivity {
   private static final String TAG = "MarkdownActivity";
@@ -89,7 +90,7 @@ public class MarkdownActivity extends AppCompatActivity {
 
       boolean displayHomeAsUp = bundle.getBoolean(EXTRA_DISPLAY_HOMEASUP);
       if(displayHomeAsUp){
-        //todo
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       }
     }else{
       getSupportActionBar().hide();
@@ -110,5 +111,10 @@ public class MarkdownActivity extends AppCompatActivity {
     if(markdown != null && !markdown.isEmpty()){
       markdownView.showMarkdown(markdown);
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    finish();
+    return super.onOptionsItemSelected(item);
   }
 }
