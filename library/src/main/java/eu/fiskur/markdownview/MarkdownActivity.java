@@ -14,7 +14,6 @@ public class MarkdownActivity extends AppCompatActivity {
   public static final String EXTRA_TOOLBAR_TITLE = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_TOOLBAR_TITLE";
   public static final String EXTRA_MARKDOWN = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_MARKDOWN";
   public static final String EXTRA_DISPLAY_HOMEASUP = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_DISPLAY_HOMEASUP";
-  public static final String EXTRA_OPEN_LINKS_EXTERNALLY = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_OPEN_LINKS_EXTERNALLY";
 
   private MarkdownView markdownView;
 
@@ -52,11 +51,6 @@ public class MarkdownActivity extends AppCompatActivity {
 
     public IntentBuilder markdown(String markdown) {
       extras.putString(EXTRA_MARKDOWN, markdown);
-      return this;
-    }
-
-    public IntentBuilder openLinksExternally(boolean openLinksExternally) {
-      extras.putBoolean(EXTRA_OPEN_LINKS_EXTERNALLY, openLinksExternally);
       return this;
     }
 
@@ -101,15 +95,18 @@ public class MarkdownActivity extends AppCompatActivity {
       markdownView.allowGestures(false);
     }
 
-    boolean openLinksExternally = bundle.getBoolean(EXTRA_OPEN_LINKS_EXTERNALLY);
-    if(openLinksExternally){
-      //todo
-    }
-
     String markdown = bundle.getString(EXTRA_MARKDOWN);
     l("markdown: " + markdown);
     if(markdown != null && !markdown.isEmpty()){
       markdownView.showMarkdown(markdown);
+    }
+  }
+
+  @Override public void onBackPressed() {
+    if(markdownView.canGoBack()){
+      markdownView.goBack();
+    }else{
+      finish();
     }
   }
 

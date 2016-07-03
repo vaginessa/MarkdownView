@@ -1,6 +1,8 @@
 package eu.fiskur.markdownview;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,6 +23,8 @@ public class MarkdownView extends RelativeLayout {
   private WebView webView;
   private WebSettings webSettings;
   private ProgressBar progress;
+
+  private MarkdownWebViewClient webViewClient;
 
   private File file = null;
   private String code = null;
@@ -63,9 +67,11 @@ public class MarkdownView extends RelativeLayout {
     LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, this);
     webView = (WebView) findViewById(R.id.markdown_web_view);
     webView.loadUrl("about:blank");//clear all
+
     progress = (ProgressBar) findViewById(R.id.markdown_progress_bar);
 
     webSettings = webView.getSettings();
+    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     webSettings.setJavaScriptEnabled(true);
 
     //add pinch/zoom
@@ -75,7 +81,8 @@ public class MarkdownView extends RelativeLayout {
     }
 
     //To get the page finished loading event:
-    webView.setWebViewClient(new MarkdownWebViewClient());
+    webViewClient = new MarkdownWebViewClient();
+    webView.setWebViewClient(webViewClient);
 
     //Just to log JS stuff nicely:
     webView.setWebChromeClient(new MarkdownChromeClient());
@@ -88,6 +95,9 @@ public class MarkdownView extends RelativeLayout {
   }
 
   private class MarkdownWebViewClient extends WebViewClient {
+
+    public boolean openExternally = false;
+
     @Override
     public void onPageFinished(WebView view, String url) {
       super.onPageFinished(view, url);
@@ -98,6 +108,12 @@ public class MarkdownView extends RelativeLayout {
         //webView.loadUrl("javascript:loadSnippet('" + code + "');");
       }
 
+    }
+
+    @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+      Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+      getContext().startActivity(intent);
+      return true;
     }
   }
 
@@ -151,7 +167,7 @@ public class MarkdownView extends RelativeLayout {
   }
 
   public void showMarkdown(File markdownFile){
-    //todo
+    Log.e(TAG, "Display Markdown from file not supported yet");
   }
 
   //On by default
@@ -164,6 +180,14 @@ public class MarkdownView extends RelativeLayout {
     }else{
       webSettings.setBuiltInZoomControls(false);
     }
+  }
+
+  public boolean canGoBack(){
+    return webView.canGoBack();
+  }
+
+  public void goBack(){
+    webView.goBack();
   }
 
   private void l(String message){
