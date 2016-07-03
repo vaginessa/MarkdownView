@@ -102,14 +102,6 @@ public class MarkdownActivity extends AppCompatActivity {
     }
   }
 
-  @Override public void onBackPressed() {
-    if(markdownView.canGoBack()){
-      markdownView.goBack();
-    }else{
-      finish();
-    }
-  }
-
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     finish();
     return super.onOptionsItemSelected(item);
