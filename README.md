@@ -7,8 +7,7 @@ Intent intent = MarkdownActivity.IntentBuilder.getBuilder()
     .showToolbar(true)
     .title("Markdown")
     .displayHomeAsUp(true)
-    .markdown("# Hello Markdown\\n\\n[fiskurgit](https://github.com/fiskurgit)")
-    .openLinksExternally(true)
+    .markdown("# Hello Markdown\n\n[fiskurgit](https://github.com/fiskurgit)")
     .allowGestures(false)
     .build(MainActivity.this);
 
