@@ -26,6 +26,8 @@ startActivity(intent);
     />
 ```
 
+//todo - document the view method
+
 ##Dependency
 
 Add jitpack.io to your root build.gradle, eg:
