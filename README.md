@@ -28,6 +28,10 @@ startActivity(intent);
     />
 ```
 
+```java
+MarkdownView markdownView = (MarkdownView) findViewById(R.id.markdown_view);
+markdownView.showMarkdown("# Hello Markdown\n\n[fiskurgit](https://github.com/fiskurgit)");
+
 //todo - document the view method
 
 ##Dependency
