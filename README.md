@@ -5,7 +5,7 @@ Markdown view for Android. Display [Markdown](https://en.wikipedia.org/wiki/Mark
 
 This library is essentially just a wrapper around [Marked.js](https://github.com/chjj/marked) and uses [Github Markdown CSS](https://github.com/sindresorhus/github-markdown-css) to style the generated Markdown.
 
-![Screenshot][Screenshot.png]
+![Screenshot](./Screenshot.png)
 
 ## Usage
 
