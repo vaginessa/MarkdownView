@@ -30,6 +30,11 @@ startActivity(intent);
 
 ```java
 MarkdownView markdownView = (MarkdownView) findViewById(R.id.markdown_view);
+
+//load a md file from the raw directory:
+markdownView.showMarkdown(R.raw.markdown_file);
+
+//or use a String
 markdownView.showMarkdown("# Hello Markdown\n\n[fiskurgit](https://github.com/fiskurgit)");
 ```
 
