@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -57,18 +58,45 @@ public class MarkdownView extends RelativeLayout {
   public MarkdownView(Context context, AttributeSet attrs) {
     super(context, attrs);
     setup();
+    readAttributes(context, attrs);
   }
 
   public MarkdownView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     setup();
+    readAttributes(context, attrs);
+  }
+
+  private void readAttributes(Context context, AttributeSet attrs){
+    TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MarkdownView, 0, 0);
+    int rawFileId;
+    int stringId;
+    try {
+      rawFileId = typedArray.getResourceId(R.styleable.MarkdownView_rawFile, -1);
+      stringId = typedArray.getResourceId(R.styleable.MarkdownView_markdown, -1);
+    }finally{
+      typedArray.recycle();
+    }
+
+    if(rawFileId != -1 && stringId != -1){
+      Log.e(TAG, "Cannot set both raw file and string resource xml attributes");
+      return;
+    }
+
+    if(rawFileId != -1){
+      showMarkdown(rawFileId);
+    }
+
+    if(stringId != -1){
+      showMarkdown(getResources().getString(stringId));
+    }
   }
 
   private void setup(){
     LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, this);
     webView = (WebView) findViewById(R.id.markdown_web_view);
     webView.loadUrl("about:blank");//clear all
-    
+
     webSettings = webView.getSettings();
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     webSettings.setJavaScriptEnabled(true);
