@@ -20,13 +20,22 @@ Intent intent = MarkdownActivity.IntentBuilder.getBuilder()
 startActivity(intent);
 ```
 ### View
+
+The cleanest way to display markdown is to add the 'markdown' namespace to your parent layout: ```xmlns:markdown="http://schemas.android.com/apk/res-auto"``` and then use the ```markdown:rawFile``` and ```markdown:markdown``` xml attributes in your MarkdownView declaration:
+
 ```xml
 <eu.fiskur.markdownview.MarkdownView
-    android:id="@+id/markdown_view"
+    markdown:rawFile="@raw/markdown_file"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+    android:layout_height="115dp" />
+    
+<eu.fiskur.markdownview.MarkdownView
+    markdown:markdown="@string/markdown_string_resource"
+    android:layout_width="match_parent"
+    android:layout_height="115dp" />
 ```
+
+or do it in code from a Fragment or Activity:
 
 ```java
 MarkdownView markdownView = (MarkdownView) findViewById(R.id.markdown_view);
