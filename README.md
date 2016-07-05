@@ -35,14 +35,13 @@ The cleanest way to display markdown is to add the 'markdown' namespace to your 
     android:layout_height="115dp" />
 ```
 
-or do it in code from you Fragment or Activity:
+or do it in code from a Fragment or Activity:
 
 ```xml
 <eu.fiskur.markdownview.MarkdownView
     android:id="@+id/markdown_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+    android:layout_height="match_parent" />
 ```
 
 ```java
