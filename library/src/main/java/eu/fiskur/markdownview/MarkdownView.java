@@ -125,12 +125,12 @@ public class MarkdownView extends RelativeLayout {
     webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, markdown), "text/html", "utf-8", null);
   }
 
-  public void showMarkdown(int fileId){
+  public void showMarkdown(int rawFileId){
     StringBuffer sb = new StringBuffer();
     BufferedReader reader = null;
     InputStreamReader isr = null;
     try {
-      isr = new InputStreamReader(getContext().getResources().openRawResource(fileId));
+      isr = new InputStreamReader(getContext().getResources().openRawResource(rawFileId));
       reader = new BufferedReader(isr);
 
       String line;

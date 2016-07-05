@@ -13,6 +13,8 @@ public class MarkdownActivity extends AppCompatActivity {
   public static final String EXTRA_ALLOW_GESTURES = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_ALLOW_GESTURES";
   public static final String EXTRA_TOOLBAR_TITLE = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_TOOLBAR_TITLE";
   public static final String EXTRA_MARKDOWN = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_MARKDOWN";
+  public static final String EXTRA_STRING_RESOURCE = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_STRING_RESOURCE";
+  public static final String EXTRA_RAW_FILE = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_RAW_FILE";
   public static final String EXTRA_DISPLAY_HOMEASUP = "eu.fiskur.markdownview.MarkdownActivity.EXTRA_DISPLAY_HOMEASUP";
 
   private MarkdownView markdownView;
@@ -54,6 +56,16 @@ public class MarkdownActivity extends AppCompatActivity {
       return this;
     }
 
+    public IntentBuilder stringResourceId(int stringResourceId) {
+      extras.putInt(EXTRA_STRING_RESOURCE, stringResourceId);
+      return this;
+    }
+
+    public IntentBuilder rawFileId(int rawFileId) {
+      extras.putInt(EXTRA_RAW_FILE, rawFileId);
+      return this;
+    }
+
     public Intent build(Context context) {
       Intent intent = new Intent(context, MarkdownActivity.class);
       intent.putExtras(extras);
@@ -70,12 +82,8 @@ public class MarkdownActivity extends AppCompatActivity {
     setup();
   }
 
-  private void l(String message){
-    Log.d(TAG, message);
-  }
-
   private void setup(){
-    l("setup()");
+    Log.d(TAG, "setup()");
     Bundle bundle = getIntent().getExtras();
     boolean showToolbar = bundle.getBoolean(EXTRA_SHOW_TOOLBAR);
     String toolbarTitle = bundle.getString(EXTRA_TOOLBAR_TITLE);
@@ -96,10 +104,29 @@ public class MarkdownActivity extends AppCompatActivity {
     }
 
     String markdown = bundle.getString(EXTRA_MARKDOWN);
-    l("markdown: " + markdown);
-    if(markdown != null && !markdown.isEmpty()){
-      markdownView.showMarkdown(markdown);
+    int stringId = bundle.getInt(EXTRA_STRING_RESOURCE, -1);
+    int rawId = bundle.getInt(EXTRA_RAW_FILE, -1);
+
+    if(markdown != null && !markdown.isEmpty() && stringId != -1){
+      Log.e(TAG, "Cannot set both a markdown String literal and a String resource Id");
+    }else if(markdown != null && !markdown.isEmpty() && rawId != -1){
+      Log.e(TAG, "Cannot set both a markdown String literal and a Raw file Id");
+    }else if(rawId != -1 && stringId != -1){
+      Log.e(TAG, "Cannot set both a Raw file Id and a String resource Id");
+    }else{
+      if(markdown != null && !markdown.isEmpty()){
+        markdownView.showMarkdown(markdown);
+      }
+      if(stringId != -1){
+        markdownView.showMarkdown(getResources().getString(stringId));
+      }
+      if(rawId != -1){
+        markdownView.showMarkdown(rawId);
+      }
     }
+
+    Log.d(TAG, "markdown: " + markdown);
+
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
