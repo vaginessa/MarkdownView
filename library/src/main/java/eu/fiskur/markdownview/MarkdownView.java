@@ -68,9 +68,7 @@ public class MarkdownView extends RelativeLayout {
     LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, this);
     webView = (WebView) findViewById(R.id.markdown_web_view);
     webView.loadUrl("about:blank");//clear all
-
-    progress = (ProgressBar) findViewById(R.id.markdown_progress_bar);
-
+    
     webSettings = webView.getSettings();
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     webSettings.setJavaScriptEnabled(true);
