@@ -28,12 +28,7 @@ public class MarkdownView extends RelativeLayout {
   private static final String TAG = MarkdownView.class.getSimpleName();
   private WebView webView;
   private WebSettings webSettings;
-  private ProgressBar progress;
-
   private MarkdownWebViewClient webViewClient;
-
-  private File file = null;
-  private String code = null;
 
   private static final String MARKDOWN_MARKUP_TEMPLATE = "<!doctype html>\n"
       + "<html>\n"
