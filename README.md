@@ -10,7 +10,7 @@ This library is essentially just a wrapper around [Marked.js](https://github.com
 ## Usage
 
 ### Activity
-Launch the activity using the builder and supply one of three sources for the Markdown content: ```markdown(String)```, ```stringResourceId(R.string.markdown_string)```, or a .md file in the res/raw directory: ```rawFileId(R.raw.markdown_file)```.
+Launch the activity using the builder and supply one of three sources for the Markdown content: ```markdown(String)```, ```resourceId(R.string.markdown_string)```, or a .md file in the res/raw directory: ```rawFileId(R.raw.markdown_file)```.
 
 ```java
 Intent intent = MarkdownActivity.IntentBuilder.getBuilder()
