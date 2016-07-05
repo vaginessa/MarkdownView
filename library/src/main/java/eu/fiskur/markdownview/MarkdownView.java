@@ -2,6 +2,8 @@ package eu.fiskur.markdownview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -16,7 +18,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MarkdownView extends RelativeLayout {
   private static final String TAG = MarkdownView.class.getSimpleName();
@@ -74,41 +80,14 @@ public class MarkdownView extends RelativeLayout {
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     webSettings.setJavaScriptEnabled(true);
 
-    //add pinch/zoom
-    webSettings.setBuiltInZoomControls(true);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      webSettings.setDisplayZoomControls(false);
-    }
-
-    //To get the page finished loading event:
+    //To handle web links:
     webViewClient = new MarkdownWebViewClient();
     webView.setWebViewClient(webViewClient);
 
-    //Just to log JS stuff nicely:
-    webView.setWebChromeClient(new MarkdownChromeClient());
-
-    //So Javascript can talk back to native:
-    webView.addJavascriptInterface(new JSInterface(), "Android");
-
-    //Does this need to be called yet?
-    //webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE), "text/html", "utf-8", null);
+    allowGestures(false);
   }
 
   private class MarkdownWebViewClient extends WebViewClient {
-
-    public boolean openExternally = false;
-
-    @Override
-    public void onPageFinished(WebView view, String url) {
-      super.onPageFinished(view, url);
-      if(file != null){
-        l("onPageFinished() loading file...");
-      }else if(code != null){
-        l("onPageFinished() loading snippet...");
-        //webView.loadUrl("javascript:loadSnippet('" + code + "');");
-      }
-
-    }
 
     @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
       Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -117,60 +96,45 @@ public class MarkdownView extends RelativeLayout {
     }
   }
 
-  private class MarkdownChromeClient extends WebChromeClient {
-    @Override
-    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-      String message = consoleMessage.message() + " -- line " + consoleMessage.lineNumber();
-      switch (consoleMessage.messageLevel()) {
-        case ERROR:
-          logErrorMessage(message);
-          break;
-        default:
-          logInfoMessage(message);
-          break;
-      }
-      return true;
-    }
-
-    private void logInfoMessage(String message) {
-      Log.i(TAG, message);
-    }
-
-    private void logErrorMessage(String message) {
-      Log.e(TAG, message);
-    }
-  }
-
-  private class JSInterface {
-
-    @JavascriptInterface
-    public void showToast(String message) {
-      l("showToast: " + message);
-    }
-
-    @JavascriptInterface
-    public void finishedImport() {
-      post(new Runnable() {
-        @Override
-        public void run() {
-          progress.setVisibility(View.GONE);
-        }
-      });
-    }
-  }
-
   public void showMarkdown(String markdown){
-    l("showMarkdown(): " + markdown);
+    if(markdown == null || markdown.isEmpty()){
+      return;
+    }
     markdown = markdown.replace("\n", "\\n");
-    l("Processing markdown: " + markdown);
     webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, markdown), "text/html", "utf-8", null);
   }
 
-  public void showMarkdown(File markdownFile){
-    Log.e(TAG, "Display Markdown from file not supported yet");
+  public void showMarkdown(int fileId){
+    StringBuffer sb = new StringBuffer();
+    BufferedReader reader = null;
+    InputStreamReader isr = null;
+    try {
+      isr = new InputStreamReader(getContext().getResources().openRawResource(fileId));
+      reader = new BufferedReader(isr);
+
+      String line;
+      while ((line = reader.readLine()) != null) {
+        sb.append(line + "\n");
+      }
+    } catch (IOException e) {
+      Log.e(TAG, e.toString());
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {}
+      }
+
+      if(isr != null){
+        try {
+          isr.close();
+        } catch (IOException e) {}
+      }
+    }
+    showMarkdown(sb.toString());
   }
 
-  //On by default
+  //Off by default
   public void allowGestures(boolean allowGestures){
     if(allowGestures){
       webSettings.setBuiltInZoomControls(true);
@@ -180,17 +144,5 @@ public class MarkdownView extends RelativeLayout {
     }else{
       webSettings.setBuiltInZoomControls(false);
     }
-  }
-
-  public boolean canGoBack(){
-    return webView.canGoBack();
-  }
-
-  public void goBack(){
-    webView.goBack();
-  }
-
-  private void l(String message){
-    Log.d(TAG, message);
   }
 }
