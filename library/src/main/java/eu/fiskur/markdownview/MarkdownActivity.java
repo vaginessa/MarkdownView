@@ -56,7 +56,7 @@ public class MarkdownActivity extends AppCompatActivity {
       return this;
     }
 
-    public IntentBuilder stringResourceId(int stringResourceId) {
+    public IntentBuilder resourceId(int stringResourceId) {
       extras.putInt(EXTRA_STRING_RESOURCE, stringResourceId);
       return this;
     }
