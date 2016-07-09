@@ -1,5 +1,10 @@
 # MarkdownView
-[![Release](https://jitpack.io/v/fiskurgit/MarkdownView.svg)](https://jitpack.io/#fiskurgit/MarkdownView) [![Build Status](https://travis-ci.org/fiskurgit/MarkdownView.svg?branch=master)](https://travis-ci.org/fiskurgit/MarkdownView) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fiskurgit/ChipCloud/blob/master/LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/fiskurgit/fiskur) 
+[![Release](https://jitpack.io/v/fiskurgit/MarkdownView.svg)](https://jitpack.io/#fiskurgit/MarkdownView)
+[![Build Status](https://travis-ci.org/fiskurgit/MarkdownView.svg?branch=master)](https://travis-ci.org/fiskurgit/MarkdownView)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fiskurgit/ChipCloud/blob/master/LICENSE) 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MarkdownView-green.svg?style=true)](https://android-arsenal.com/details/1/3869)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/fiskurgit/fiskur)
+
 
 Markdown view for Android. Display [Markdown](https://en.wikipedia.org/wiki/Markdown) in your apps, useful for FAQs, Help, Size Guides, About screens etc. To make things really easy there's an Activity included, just use the included IntentBuilder.
 
